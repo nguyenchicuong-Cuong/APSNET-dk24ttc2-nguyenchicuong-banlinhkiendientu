@@ -1,0 +1,61 @@
+@model IEnumerable<LinhKienDienTu.Models.Category>
+
+@{
+    ViewData["Title"] = "Quản lý danh mục";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show glass-card" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show glass-card" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-white">Quản lý danh mục</h2>
+    <a asp-action="Create" class="btn btn-primary rounded-pill"><i class="fa-solid fa-plus me-2"></i>Thêm mới</a>
+</div>
+
+<div class="glass-card p-0 overflow-hidden">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th>Tên danh mục</th>
+                <th>Mô tả</th>
+                <th>Danh mục cha</th>
+                <th>Số sản phẩm</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@(item.Parent?.Name ?? "-")</td>
+                    <td>
+                        <span class="badge bg-info">@item.Products?.Count ?? 0</span>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info me-1">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

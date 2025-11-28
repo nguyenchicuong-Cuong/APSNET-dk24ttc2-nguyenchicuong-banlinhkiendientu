@@ -1,0 +1,85 @@
+@model Microsoft.AspNetCore.Identity.IdentityUser
+
+@{
+    ViewData["Title"] = "Chi tiết khách hàng";
+    var orders = ViewBag.Orders as List<LinhKienDienTu.Models.Order>;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="glass-card p-4 mb-4">
+            <h4 class="mb-3 border-bottom border-secondary pb-2">Thông tin khách hàng</h4>
+            <p class="mb-2"><strong>Email:</strong> @Model.Email</p>
+            <p class="mb-2"><strong>Tên đăng nhập:</strong> @Model.UserName</p>
+            <p class="mb-2"><strong>Email xác nhận:</strong> @(Model.EmailConfirmed ? "Đã xác nhận" : "Chưa xác nhận")</p>
+        </div>
+
+        <div class="glass-card p-4">
+            <h4 class="mb-3 border-bottom border-secondary pb-2">Thống kê</h4>
+            <p class="mb-2"><strong>Tổng đơn hàng:</strong> <span class="badge bg-info">@ViewBag.OrderCount</span></p>
+            <p class="mb-0"><strong>Tổng chi tiêu:</strong> <span class="text-gradient fw-bold">@ViewBag.TotalSpent.ToString("N0") ₫</span></p>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="glass-card p-4">
+            <h4 class="mb-3 border-bottom border-secondary pb-2">Lịch sử đơn hàng</h4>
+            
+            @if (orders != null && orders.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã ĐH</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in orders)
+                            {
+                                <tr>
+                                    <td>#@order.Id</td>
+                                    <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="text-gradient fw-bold">@order.TotalAmount.ToString("N0") ₫</td>
+                                    <td>
+                                        @switch (order.Status)
+                                        {
+                                            case LinhKienDienTu.Models.OrderStatus.Pending:
+                                                <span class="badge bg-warning text-dark">Chờ xử lý</span>
+                                                break;
+                                            case LinhKienDienTu.Models.OrderStatus.Processing:
+                                                <span class="badge bg-info text-dark">Đang xử lý</span>
+                                                break;
+                                            case LinhKienDienTu.Models.OrderStatus.Shipping:
+                                                <span class="badge bg-primary">Đang giao</span>
+                                                break;
+                                            case LinhKienDienTu.Models.OrderStatus.Delivered:
+                                                <span class="badge bg-success">Đã giao</span>
+                                                break;
+                                            case LinhKienDienTu.Models.OrderStatus.Cancelled:
+                                                <span class="badge bg-danger">Đã hủy</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="OrderManager" asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-light">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">Chưa có đơn hàng nào.</p>
+            }
+        </div>
+    </div>
+</div>

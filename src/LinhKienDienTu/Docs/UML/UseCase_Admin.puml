@@ -1,0 +1,111 @@
+@startuml UseCase_Admin
+!theme plain
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+title Lược Đồ Use Case Chi Tiết - Quản Trị Viên (Admin)
+
+actor "Quản Trị Viên" as Admin
+
+rectangle "Admin Panel - Hệ Thống Linh Kiện Điện Tử" {
+    
+    package "Dashboard & Thống Kê" {
+        usecase "Xem Dashboard" as UC_Dashboard
+        usecase "Xem thống kê doanh thu" as UC_ViewRevenue
+        usecase "Xem đơn hàng mới" as UC_ViewNewOrders
+        usecase "Xem cảnh báo tồn kho" as UC_ViewStockAlert
+        usecase "Xem khách hàng mới" as UC_ViewNewCustomers
+    }
+    
+    package "Quản Lý Sản Phẩm" {
+        usecase "Xem danh sách sản phẩm" as UC_ListProducts
+        usecase "Thêm sản phẩm mới" as UC_CreateProduct
+        usecase "Chỉnh sửa sản phẩm" as UC_EditProduct
+        usecase "Xóa sản phẩm" as UC_DeleteProduct
+        usecase "Xem chi tiết sản phẩm" as UC_ViewProductDetail
+        usecase "Cập nhật tồn kho" as UC_UpdateStock
+        usecase "Quản lý hình ảnh" as UC_ManageImages
+        usecase "Quản lý datasheet" as UC_ManageDatasheet
+    }
+    
+    package "Quản Lý Danh Mục" {
+        usecase "Xem danh sách danh mục" as UC_ListCategories
+        usecase "Thêm danh mục" as UC_CreateCategory
+        usecase "Chỉnh sửa danh mục" as UC_EditCategory
+        usecase "Xóa danh mục" as UC_DeleteCategory
+        usecase "Quản lý cấu trúc cây" as UC_ManageTree
+    }
+    
+    package "Quản Lý Đơn Hàng" {
+        usecase "Xem danh sách đơn hàng" as UC_ListOrders
+        usecase "Xem chi tiết đơn hàng" as UC_ViewOrderDetail
+        usecase "Cập nhật trạng thái đơn" as UC_UpdateOrderStatus
+        usecase "Xác nhận đơn hàng" as UC_ConfirmOrder
+        usecase "Hủy đơn hàng" as UC_CancelOrder
+        usecase "In hóa đơn" as UC_PrintInvoice
+    }
+    
+    package "Quản Lý Khách Hàng" {
+        usecase "Xem danh sách khách hàng" as UC_ListCustomers
+        usecase "Xem chi tiết khách hàng" as UC_ViewCustomerDetail
+        usecase "Xem lịch sử mua hàng" as UC_ViewPurchaseHistory
+        usecase "Xem thống kê chi tiêu" as UC_ViewSpendingStats
+    }
+    
+    package "Báo Cáo & Phân Tích" {
+        usecase "Xem báo cáo tổng quan" as UC_ViewOverallReport
+        usecase "Báo cáo doanh thu" as UC_RevenueReport
+        usecase "Báo cáo sản phẩm bán chạy" as UC_BestSellerReport
+        usecase "Báo cáo tồn kho" as UC_InventoryReport
+        usecase "Báo cáo khách hàng" as UC_CustomerReport
+        usecase "Xuất báo cáo Excel/PDF" as UC_ExportReport
+    }
+}
+
+' Dashboard relationships
+Admin --> UC_Dashboard
+UC_Dashboard ..> UC_ViewRevenue : <<include>>
+UC_Dashboard ..> UC_ViewNewOrders : <<include>>
+UC_Dashboard ..> UC_ViewStockAlert : <<include>>
+UC_Dashboard ..> UC_ViewNewCustomers : <<include>>
+
+' Product Management
+Admin --> UC_ListProducts
+Admin --> UC_CreateProduct
+Admin --> UC_EditProduct
+Admin --> UC_DeleteProduct
+Admin --> UC_ViewProductDetail
+UC_CreateProduct ..> UC_ManageImages : <<include>>
+UC_CreateProduct ..> UC_ManageDatasheet : <<extend>>
+UC_EditProduct ..> UC_UpdateStock : <<include>>
+
+' Category Management
+Admin --> UC_ListCategories
+Admin --> UC_CreateCategory
+Admin --> UC_EditCategory
+Admin --> UC_DeleteCategory
+UC_EditCategory ..> UC_ManageTree : <<include>>
+
+' Order Management
+Admin --> UC_ListOrders
+Admin --> UC_ViewOrderDetail
+Admin --> UC_UpdateOrderStatus
+UC_UpdateOrderStatus ..> UC_ConfirmOrder : <<extend>>
+UC_UpdateOrderStatus ..> UC_CancelOrder : <<extend>>
+UC_ViewOrderDetail ..> UC_PrintInvoice : <<extend>>
+
+' Customer Management
+Admin --> UC_ListCustomers
+Admin --> UC_ViewCustomerDetail
+UC_ViewCustomerDetail ..> UC_ViewPurchaseHistory : <<include>>
+UC_ViewCustomerDetail ..> UC_ViewSpendingStats : <<include>>
+
+' Reports
+Admin --> UC_ViewOverallReport
+UC_ViewOverallReport ..> UC_RevenueReport : <<extend>>
+UC_ViewOverallReport ..> UC_BestSellerReport : <<extend>>
+UC_ViewOverallReport ..> UC_InventoryReport : <<extend>>
+UC_ViewOverallReport ..> UC_CustomerReport : <<extend>>
+Admin --> UC_ExportReport
+
+@enduml

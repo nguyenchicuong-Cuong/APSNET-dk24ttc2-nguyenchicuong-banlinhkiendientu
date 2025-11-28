@@ -1,0 +1,74 @@
+@model IEnumerable<LinhKienDienTu.Models.Order>
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-white">Quản lý đơn hàng</h2>
+</div>
+
+<div class="glass-card p-0 overflow-hidden">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th>Mã ĐH</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thanh toán</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>#@item.Id</td>
+                    <td>
+                        <div>@item.CustomerName</div>
+                        <small class="text-muted">@item.PhoneNumber</small>
+                    </td>
+                    <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td class="text-gradient fw-bold">@item.TotalAmount.ToString("N0") ₫</td>
+                    <td>
+                        @switch (item.Status)
+                        {
+                            case LinhKienDienTu.Models.OrderStatus.Pending:
+                                <span class="badge bg-warning text-dark">Chờ xử lý</span>
+                                break;
+                            case LinhKienDienTu.Models.OrderStatus.Processing:
+                                <span class="badge bg-info text-dark">Đang xử lý</span>
+                                break;
+                            case LinhKienDienTu.Models.OrderStatus.Shipping:
+                                <span class="badge bg-primary">Đang giao</span>
+                                break;
+                            case LinhKienDienTu.Models.OrderStatus.Delivered:
+                                <span class="badge bg-success">Đã giao</span>
+                                break;
+                            case LinhKienDienTu.Models.OrderStatus.Cancelled:
+                                <span class="badge bg-danger">Đã hủy</span>
+                                break;
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsPaid)
+                        {
+                            <span class="badge bg-success">Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Chưa thanh toán</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-light">
+                            <i class="fa-solid fa-eye"></i> Chi tiết
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

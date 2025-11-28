@@ -1,0 +1,80 @@
+@startuml UseCase_Overall
+!theme plain
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+title Lược Đồ Use Case Tổng Quát - Hệ Thống Linh Kiện Điện Tử
+
+left to right direction
+
+actor "Khách Vãng Lai" as Guest
+actor "Khách Hàng" as Customer
+actor "Quản Trị Viên" as Admin
+
+Guest <|-- Customer
+Customer <|-- Admin
+
+rectangle "Hệ Thống Linh Kiện Điện Tử" {
+    
+    package "Quản Lý Tài Khoản" {
+        usecase "Đăng ký" as UC_Register
+        usecase "Đăng nhập" as UC_Login
+        usecase "Đăng xuất" as UC_Logout
+        usecase "Quên mật khẩu" as UC_ForgotPassword
+        usecase "Xem hồ sơ" as UC_ViewProfile
+        usecase "Đổi mật khẩu" as UC_ChangePassword
+    }
+    
+    package "Mua Sắm" {
+        usecase "Xem danh sách sản phẩm" as UC_ViewProducts
+        usecase "Xem chi tiết sản phẩm" as UC_ViewProductDetail
+        usecase "Tìm kiếm sản phẩm" as UC_SearchProduct
+        usecase "Thêm vào giỏ hàng" as UC_AddToCart
+        usecase "Quản lý giỏ hàng" as UC_ManageCart
+        usecase "Thanh toán" as UC_Checkout
+        usecase "Xem lịch sử đơn hàng" as UC_ViewOrderHistory
+        usecase "Đánh giá sản phẩm" as UC_ReviewProduct
+    }
+    
+    package "Quản Trị Hệ Thống" {
+        usecase "Xem Dashboard" as UC_Dashboard
+        usecase "Quản lý sản phẩm" as UC_ManageProducts
+        usecase "Quản lý danh mục" as UC_ManageCategories
+        usecase "Quản lý đơn hàng" as UC_ManageOrders
+        usecase "Quản lý khách hàng" as UC_ManageCustomers
+        usecase "Xem báo cáo" as UC_ViewReports
+    }
+}
+
+' Guest relationships
+Guest --> UC_ViewProducts
+Guest --> UC_ViewProductDetail
+Guest --> UC_SearchProduct
+Guest --> UC_Register
+Guest --> UC_Login
+
+' Customer relationships
+Customer --> UC_Logout
+Customer --> UC_ForgotPassword
+Customer --> UC_ViewProfile
+Customer --> UC_ChangePassword
+Customer --> UC_AddToCart
+Customer --> UC_ManageCart
+Customer --> UC_Checkout
+Customer --> UC_ViewOrderHistory
+Customer --> UC_ReviewProduct
+
+' Admin relationships
+Admin --> UC_Dashboard
+Admin --> UC_ManageProducts
+Admin --> UC_ManageCategories
+Admin --> UC_ManageOrders
+Admin --> UC_ManageCustomers
+Admin --> UC_ViewReports
+
+' Include relationships
+UC_Checkout ..> UC_ManageCart : <<include>>
+UC_ViewOrderHistory ..> UC_Login : <<include>>
+UC_ReviewProduct ..> UC_Login : <<include>>
+
+@enduml

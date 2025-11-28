@@ -1,0 +1,25 @@
+@model int
+
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="container mt-5 text-center">
+    <div class="glass-card p-5 d-inline-block">
+        <div class="mb-4">
+            <i class="fa-solid fa-circle-check fa-5x text-success"></i>
+        </div>
+        <h2 class="mb-3 text-gradient fw-bold">Đặt hàng thành công!</h2>
+        <p class="lead text-light mb-4">Cảm ơn bạn đã mua sắm tại Linh Kiện Điện Tử Premium.</p>
+        <p class="text-muted mb-4">Mã đơn hàng của bạn là: <strong>#@Model</strong></p>
+        
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary rounded-pill px-4">
+                <i class="fa-solid fa-home me-2"></i>Về trang chủ
+            </a>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-light rounded-pill px-4">
+                <i class="fa-solid fa-cart-plus me-2"></i>Tiếp tục mua sắm
+            </a>
+        </div>
+    </div>
+</div>

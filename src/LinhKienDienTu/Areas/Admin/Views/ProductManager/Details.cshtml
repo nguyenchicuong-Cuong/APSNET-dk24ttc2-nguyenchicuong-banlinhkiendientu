@@ -1,0 +1,55 @@
+@model LinhKienDienTu.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card p-4">
+            <h2 class="mb-4 text-white">Chi tiết sản phẩm</h2>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Tên sản phẩm:</div>
+                <div class="col-md-8 text-white-50">@Model.Name</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Mã sản phẩm:</div>
+                <div class="col-md-8 text-white-50">@Model.PartNumber</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Danh mục:</div>
+                <div class="col-md-8 text-white-50">@Model.Category?.Name</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Giá:</div>
+                <div class="col-md-8 text-white-50">@Model.Price.ToString("N0") ₫</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Giá sỉ (>100):</div>
+                <div class="col-md-8 text-white-50">@(Model.BulkPrice?.ToString("N0") ?? "N/A") ₫</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Tồn kho:</div>
+                <div class="col-md-8 text-white-50">@Model.StockQuantity</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Nhà sản xuất:</div>
+                <div class="col-md-8 text-white-50">@Model.Manufacturer</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Mô tả:</div>
+                <div class="col-md-8 text-white-50">@Model.Description</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-light">Thông số kỹ thuật:</div>
+                <div class="col-md-8 text-white-50">@Model.Specifications</div>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Chỉnh sửa</a>
+                <a asp-action="Index" class="btn btn-outline-light">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>

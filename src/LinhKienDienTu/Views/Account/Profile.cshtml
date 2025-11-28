@@ -1,0 +1,75 @@
+@model Microsoft.AspNetCore.Identity.IdentityUser
+
+@{
+    ViewData["Title"] = "Tài khoản của tôi";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show glass-card" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-gradient fw-bold"><i class="fa-solid fa-user me-2"></i>Tài khoản của tôi</h2>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="glass-card p-4">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-circle-user fa-5x text-gradient"></i>
+                </div>
+                <h5 class="text-center mb-3">@Model.UserName</h5>
+                <div class="list-group list-group-flush bg-transparent">
+                    <a asp-action="Profile" class="list-group-item list-group-item-action bg-transparent text-light active">
+                        <i class="fa-solid fa-user me-2"></i>Thông tin cá nhân
+                    </a>
+                    <a asp-controller="Order" asp-action="MyOrders" class="list-group-item list-group-item-action bg-transparent text-light">
+                        <i class="fa-solid fa-clipboard-list me-2"></i>Đơn hàng của tôi
+                    </a>
+                    <a asp-action="ChangePassword" class="list-group-item list-group-item-action bg-transparent text-light">
+                        <i class="fa-solid fa-key me-2"></i>Đổi mật khẩu
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="glass-card p-4">
+                <h4 class="mb-4 border-bottom border-secondary pb-2">Thông tin cá nhân</h4>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold text-light">Email:</div>
+                    <div class="col-md-8 text-white-50">@Model.Email</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold text-light">Tên đăng nhập:</div>
+                    <div class="col-md-8 text-white-50">@Model.UserName</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold text-light">Trạng thái email:</div>
+                    <div class="col-md-8">
+                        @if (Model.EmailConfirmed)
+                        {
+                            <span class="badge bg-success">Đã xác nhận</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Chưa xác nhận</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a asp-action="ChangePassword" class="btn btn-primary rounded-pill">
+                        <i class="fa-solid fa-key me-2"></i>Đổi mật khẩu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

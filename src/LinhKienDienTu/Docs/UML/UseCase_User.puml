@@ -1,0 +1,116 @@
+@startuml UseCase_User
+!theme plain
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+title Lược Đồ Use Case Chi Tiết - Khách Hàng (User)
+
+actor "Khách Vãng Lai" as Guest
+actor "Khách Hàng" as Customer
+
+Guest <|-- Customer
+
+rectangle "Hệ Thống Linh Kiện Điện Tử - Giao Diện Người Dùng" {
+    
+    package "Quản Lý Tài Khoản" {
+        usecase "Đăng ký tài khoản" as UC_Register
+        usecase "Đăng nhập" as UC_Login
+        usecase "Đăng xuất" as UC_Logout
+        usecase "Quên mật khẩu" as UC_ForgotPassword
+        usecase "Đặt lại mật khẩu" as UC_ResetPassword
+        usecase "Xem hồ sơ cá nhân" as UC_ViewProfile
+        usecase "Cập nhật thông tin" as UC_UpdateProfile
+        usecase "Đổi mật khẩu" as UC_ChangePassword
+    }
+    
+    package "Duyệt & Tìm Kiếm Sản Phẩm" {
+        usecase "Xem trang chủ" as UC_ViewHome
+        usecase "Xem danh sách sản phẩm" as UC_ViewProducts
+        usecase "Xem theo danh mục" as UC_ViewByCategory
+        usecase "Tìm kiếm sản phẩm" as UC_SearchProduct
+        usecase "Lọc sản phẩm" as UC_FilterProduct
+        usecase "Sắp xếp sản phẩm" as UC_SortProduct
+        usecase "Xem chi tiết sản phẩm" as UC_ViewProductDetail
+        usecase "Xem thông số kỹ thuật" as UC_ViewSpecs
+        usecase "Tải datasheet" as UC_DownloadDatasheet
+    }
+    
+    package "Giỏ Hàng & Thanh Toán" {
+        usecase "Thêm vào giỏ hàng" as UC_AddToCart
+        usecase "Xem giỏ hàng" as UC_ViewCart
+        usecase "Cập nhật số lượng" as UC_UpdateQuantity
+        usecase "Xóa khỏi giỏ hàng" as UC_RemoveFromCart
+        usecase "Xóa toàn bộ giỏ" as UC_ClearCart
+        usecase "Thanh toán" as UC_Checkout
+        usecase "Nhập thông tin giao hàng" as UC_EnterShipping
+        usecase "Chọn phương thức thanh toán" as UC_SelectPayment
+        usecase "Xác nhận đơn hàng" as UC_ConfirmOrder
+    }
+    
+    package "Quản Lý Đơn Hàng" {
+        usecase "Xem lịch sử đơn hàng" as UC_ViewOrderHistory
+        usecase "Xem chi tiết đơn hàng" as UC_ViewOrderDetail
+        usecase "Theo dõi trạng thái" as UC_TrackOrder
+        usecase "Hủy đơn hàng" as UC_CancelOrder
+    }
+    
+    package "Đánh Giá & Phản Hồi" {
+        usecase "Xem đánh giá sản phẩm" as UC_ViewReviews
+        usecase "Viết đánh giá" as UC_WriteReview
+        usecase "Chấm điểm sản phẩm" as UC_RateProduct
+    }
+}
+
+' Guest relationships (Public access)
+Guest --> UC_ViewHome
+Guest --> UC_ViewProducts
+Guest --> UC_ViewByCategory
+Guest --> UC_SearchProduct
+Guest --> UC_FilterProduct
+Guest --> UC_SortProduct
+Guest --> UC_ViewProductDetail
+Guest --> UC_ViewSpecs
+Guest --> UC_DownloadDatasheet
+Guest --> UC_ViewReviews
+Guest --> UC_Register
+Guest --> UC_Login
+
+' Account Management
+Customer --> UC_Logout
+Customer --> UC_ForgotPassword
+Customer --> UC_ViewProfile
+Customer --> UC_UpdateProfile
+Customer --> UC_ChangePassword
+UC_ForgotPassword ..> UC_ResetPassword : <<include>>
+
+' Shopping Cart
+Customer --> UC_AddToCart
+Customer --> UC_ViewCart
+UC_ViewCart ..> UC_UpdateQuantity : <<extend>>
+UC_ViewCart ..> UC_RemoveFromCart : <<extend>>
+UC_ViewCart ..> UC_ClearCart : <<extend>>
+
+' Checkout Process
+Customer --> UC_Checkout
+UC_Checkout ..> UC_ViewCart : <<include>>
+UC_Checkout ..> UC_EnterShipping : <<include>>
+UC_Checkout ..> UC_SelectPayment : <<include>>
+UC_Checkout ..> UC_ConfirmOrder : <<include>>
+
+' Order Management
+Customer --> UC_ViewOrderHistory
+Customer --> UC_ViewOrderDetail
+UC_ViewOrderDetail ..> UC_TrackOrder : <<include>>
+UC_ViewOrderHistory ..> UC_CancelOrder : <<extend>>
+
+' Reviews
+Customer --> UC_WriteReview
+UC_WriteReview ..> UC_RateProduct : <<include>>
+UC_WriteReview ..> UC_Login : <<include>>
+
+' Product Detail Extensions
+UC_ViewProductDetail ..> UC_ViewSpecs : <<include>>
+UC_ViewProductDetail ..> UC_DownloadDatasheet : <<extend>>
+UC_ViewProductDetail ..> UC_ViewReviews : <<include>>
+
+@enduml

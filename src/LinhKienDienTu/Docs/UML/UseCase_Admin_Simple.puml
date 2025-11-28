@@ -1,0 +1,55 @@
+@startuml UseCase_Admin_Simple
+!theme plain
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+title Lược Đồ Use Case Đơn Giản - Quản Trị Viên
+
+actor "Quản Trị Viên" as Admin
+
+rectangle "Hệ Thống Quản Trị" {
+    
+    package "Quản Lý Cơ Bản" {
+        usecase "Quản lý sản phẩm\n(CRUD)" as UC_Products
+        usecase "Quản lý danh mục\n(CRUD)" as UC_Categories
+        usecase "Quản lý đơn hàng\n(CRUD)" as UC_Orders
+        usecase "Quản lý khách hàng\n(CRUD)" as UC_Customers
+        usecase "Quản lý thương hiệu\n(CRUD)" as UC_Brands
+        usecase "Quản lý kho hàng\n(CRUD)" as UC_Warehouse
+    }
+    
+    package "Thống Kê & Báo Cáo" {
+        usecase "Xem Dashboard" as UC_Dashboard
+        usecase "Xem báo cáo\ndoanh thu" as UC_Reports
+        usecase "Thống kê sản phẩm\nbán chạy" as UC_Stats
+    }
+}
+
+' Admin relationships
+Admin --> UC_Products
+Admin --> UC_Categories
+Admin --> UC_Orders
+Admin --> UC_Customers
+Admin --> UC_Brands
+Admin --> UC_Warehouse
+Admin --> UC_Dashboard
+Admin --> UC_Reports
+Admin --> UC_Stats
+
+note right of UC_Products
+  **CRUD bao gồm:**
+  • Create (Tạo mới)
+  • Read (Xem/Đọc)
+  • Update (Cập nhật)
+  • Delete (Xóa)
+end note
+
+note bottom of UC_Dashboard
+  Dashboard hiển thị:
+  • Tổng quan doanh thu
+  • Đơn hàng mới
+  • Cảnh báo tồn kho
+  • Khách hàng mới
+end note
+
+@enduml

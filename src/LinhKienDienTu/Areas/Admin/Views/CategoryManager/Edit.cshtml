@@ -1,0 +1,52 @@
+@model LinhKienDienTu.Models.Category
+
+@{
+    ViewData["Title"] = "Chỉnh sửa danh mục";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card p-4">
+            <h2 class="mb-4 text-white">Chỉnh sửa danh mục</h2>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label text-light"></label>
+                    <input asp-for="Name" class="form-control glass-input" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label text-light"></label>
+                    <textarea asp-for="Description" class="form-control glass-input" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ParentId" class="form-label text-light">Danh mục cha (tùy chọn)</label>
+                    <select asp-for="ParentId" class="form-control glass-input">
+                        <option value="">-- Không có --</option>
+                        @foreach (var cat in ViewBag.Categories as List<LinhKienDienTu.Models.Category>)
+                        {
+                            if (Model.ParentId == cat.Id)
+                            {
+                                <option value="@cat.Id" selected>@cat.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@cat.Id">@cat.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-action="Index" class="btn btn-outline-light">Hủy</a>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

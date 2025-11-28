@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        .admin-sidebar {
+            min-height: 100vh;
+            background: rgba(15, 23, 42, 0.9);
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .admin-content {
+            padding: 20px;
+        }
+        .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar collapse show">
+                <div class="position-sticky pt-3">
+                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none px-3" href="/">
+                        <span class="fs-4 fw-bold">Admin Panel</span>
+                    </a>
+                    <hr class="text-white">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white mb-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-gauge me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white mb-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "ProductManager" ? "active" : "")" asp-area="Admin" asp-controller="ProductManager" asp-action="Index">
+                                <i class="fa-solid fa-box me-2"></i> Sản phẩm
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white mb-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "OrderManager" ? "active" : "")" asp-area="Admin" asp-controller="OrderManager" asp-action="Index">
+                                <i class="fa-solid fa-clipboard-list me-2"></i> Đơn hàng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white mb-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "CategoryManager" ? "active" : "")" asp-area="Admin" asp-controller="CategoryManager" asp-action="Index">
+                                <i class="fa-solid fa-layer-group me-2"></i> Danh mục
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white mb-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "CustomerManager" ? "active" : "")" asp-area="Admin" asp-controller="CustomerManager" asp-action="Index">
+                                <i class="fa-solid fa-users me-2"></i> Khách hàng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white mb-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Reports" ? "active" : "")" asp-area="Admin" asp-controller="Reports" asp-action="Index">
+                                <i class="fa-solid fa-chart-line me-2"></i> Báo cáo
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="text-white">
+                    <div class="px-3">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-light w-100 btn-sm">
+                            <i class="fa-solid fa-arrow-left me-2"></i>Về trang chủ
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

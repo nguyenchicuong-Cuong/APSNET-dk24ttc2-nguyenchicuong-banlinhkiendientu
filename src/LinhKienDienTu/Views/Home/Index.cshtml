@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="text-center mb-5 mt-5">
+    <h1 class="display-3 fw-bold mb-3">Linh Kiện Điện Tử <span class="text-gradient">Chất Lượng Cao</span></h1>
+    <p class="lead mb-4 text-light opacity-75">Cung cấp các loại linh kiện điện tử chính hãng, giá tốt nhất thị trường.</p>
+    <div class="d-flex justify-content-center gap-3">
+        <a asp-controller="Product" asp-action="Index" class="btn btn-primary btn-lg px-4 py-2 rounded-pill">Mua ngay</a>
+        <a href="#" class="btn btn-outline-light btn-lg px-4 py-2 rounded-pill glass-btn">Tìm hiểu thêm</a>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="glass-card h-100 text-center">
+            <i class="fa-solid fa-truck-fast fa-3x mb-3 text-gradient"></i>
+            <h4>Giao hàng nhanh</h4>
+            <p class="opacity-75">Vận chuyển toàn quốc, nhận hàng trong 2-3 ngày.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="glass-card h-100 text-center">
+            <i class="fa-solid fa-shield-halved fa-3x mb-3 text-gradient"></i>
+            <h4>Bảo hành uy tín</h4>
+            <p class="opacity-75">Bảo hành 1 đổi 1 trong vòng 30 ngày nếu có lỗi.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="glass-card h-100 text-center">
+            <i class="fa-solid fa-headset fa-3x mb-3 text-gradient"></i>
+            <h4>Hỗ trợ 24/7</h4>
+            <p class="opacity-75">Đội ngũ kỹ thuật viên sẵn sàng hỗ trợ bạn mọi lúc.</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-4 border-bottom border-secondary pb-2">Sản phẩm nổi bật</h2>
+
+<div class="row">
+    <!-- Dummy Products -->
+    @for (int i = 1; i <= 4; i++)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="glass-card h-100 d-flex flex-column">
+                <div class="bg-white rounded-3 p-3 mb-3 d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <!-- Placeholder for product image -->
+                    <i class="fa-solid fa-microchip fa-5x text-secondary"></i>
+                </div>
+                <h5 class="card-title">Vi điều khiển STM32F103C8T6</h5>
+                <p class="card-text opacity-75 flex-grow-1">Dòng chip ARM Cortex-M3 phổ biến, giá rẻ, hiệu năng cao.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <span class="fw-bold text-gradient fs-5">65.000 ₫</span>
+                    <button class="btn btn-sm btn-primary rounded-pill"><i class="fa-solid fa-cart-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

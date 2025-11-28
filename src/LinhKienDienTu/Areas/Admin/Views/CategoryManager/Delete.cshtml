@@ -1,0 +1,51 @@
+@model LinhKienDienTu.Models.Category
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card p-4">
+            <h2 class="mb-4 text-danger">Xóa danh mục</h2>
+            <h5 class="text-white mb-3">Bạn có chắc chắn muốn xóa danh mục này?</h5>
+            
+            <div class="mb-4">
+                <dl class="row text-light">
+                    <dt class="col-sm-4">Tên danh mục:</dt>
+                    <dd class="col-sm-8">@Model.Name</dd>
+
+                    <dt class="col-sm-4">Mô tả:</dt>
+                    <dd class="col-sm-8">@Model.Description</dd>
+
+                    <dt class="col-sm-4">Danh mục cha:</dt>
+                    <dd class="col-sm-8">@(Model.Parent?.Name ?? "-")</dd>
+
+                    <dt class="col-sm-4">Số sản phẩm:</dt>
+                    <dd class="col-sm-8">@Model.Products?.Count</dd>
+                </dl>
+            </div>
+
+            @if (Model.Products != null && Model.Products.Any())
+            {
+                <div class="alert alert-warning glass-card border-0 mb-4">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                    Cảnh báo: Danh mục này đang chứa sản phẩm. Bạn không thể xóa nó cho đến khi di chuyển hoặc xóa hết sản phẩm.
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a asp-action="Index" class="btn btn-outline-light">Quay lại</a>
+                </div>
+            }
+            else
+            {
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-outline-light">Hủy</a>
+                        <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
